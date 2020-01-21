@@ -6,21 +6,23 @@ direction = input("Enter your DIRECTION: ")
 
 
 def get_routes(route):
+    global route_value
     getRoutes = "https://svc.metrotransit.org/NexTrip/Routes?format=json"
     getRoutes_response = requests.get(getRoutes)
 
     if getRoutes_response.status_code == 200:
         for i in range(len(getRoutes_response.json())):
-            if route == getRoutes_response.json()[i]["Description"]:
-                route = int(getRoutes_response.json()[i]["Route"])
-    return route
-
-route = get_routes(route)
+            if route in getRoutes_response.json()[i]["Description"]:
+                route_value = int(getRoutes_response.json()[i]["Route"])
+    return route_value
 
 
-def get_direction(route, direction):
+route_value = get_routes(route)
+
+
+def get_direction(route_value, direction):
     global direction_value
-    getDirections = f"https://svc.metrotransit.org/NexTrip/Directions/{route}?format=json"
+    getDirections = f"https://svc.metrotransit.org/NexTrip/Directions/{route_value}?format=json"
     getDirections_response = requests.get(getDirections)
 
     if getDirections_response.status_code == 200:
@@ -30,12 +32,12 @@ def get_direction(route, direction):
     return direction_value
 
 
-direction_value = get_direction(route, direction)
+direction_value = get_direction(route_value, direction)
 
 
-def get_stops(route, direction_value, bus_stop_name):
+def get_stops(route_value, direction_value, bus_stop_name):
     global stop_value
-    getStops = f"https://svc.metrotransit.org/NexTrip/Stops/{route}/{direction_value}?format=json"
+    getStops = f"https://svc.metrotransit.org/NexTrip/Stops/{route_value}/{direction_value}?format=json"
     getStops_response = requests.get(getStops)
 
     if getStops_response.status_code == 200:
@@ -44,12 +46,13 @@ def get_stops(route, direction_value, bus_stop_name):
                 stop_value = getStops_response.json()[i]["Value"]
     return stop_value
 
-stop_value = get_stops(route, direction_value, bus_stop_name)
+
+stop_value = get_stops(route_value, direction_value, bus_stop_name)
 
 
-def get_timepoint_departure(route, direction_value, stop_value):
+def get_timepoint_departure(route_value, direction_value, stop_value):
     global nextBus
-    getTimepointDepartures = f"https://svc.metrotransit.org/NexTrip/{route}/{direction_value}/{stop_value}?format=json"
+    getTimepointDepartures = f"https://svc.metrotransit.org/NexTrip/{route_value}/{direction_value}/{stop_value}?format=json"
     getTimepointDepartures_response = requests.get(getTimepointDepartures)
 
     if getTimepointDepartures_response.status_code == 200:
@@ -61,7 +64,8 @@ def get_timepoint_departure(route, direction_value, stop_value):
         return nextBus
 
 
-nextBus = get_timepoint_departure(route, direction_value, stop_value)
+nextBus = get_timepoint_departure(route_value, direction_value, stop_value)
 print(nextBus)
 
 # “METRO Blue Line” “Target Field Station Platform 1” “south”
+# “Express - Target - Hwy 252 and 73rd Av P&R - Mpls” “Target North Campus Building F” “south”
