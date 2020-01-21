@@ -1,8 +1,10 @@
 import requests
+import sys
 
-route = input("Enter your BUS ROUTE: ")
-bus_stop_name = input("Enter your BUS STOP NAME: ")
-direction = input("Enter your DIRECTION: ")
+# Set up terminal input arguments
+route = sys.argv[1]
+bus_stop_name = sys.argv[2]
+direction = sys.argv[3]
 
 
 def get_routes(route):
@@ -10,10 +12,18 @@ def get_routes(route):
     getRoutes = "https://svc.metrotransit.org/NexTrip/Routes?format=json"
     getRoutes_response = requests.get(getRoutes)
 
-    if getRoutes_response.status_code == 200:
-        for i in range(len(getRoutes_response.json())):
-            if route in getRoutes_response.json()[i]["Description"]:
-                route_value = int(getRoutes_response.json()[i]["Route"])
+    try:
+        if getRoutes_response.status_code == 200:
+            for i in range(len(getRoutes_response.json())):
+                if route in getRoutes_response.json()[i]["Description"]:
+                    route_value = int(getRoutes_response.json()[i]["Route"])
+                    break
+                else:
+                    print("The route for", route, "cannot be found.")
+        else:
+            print("Error occurred: ", getRoutes_response.status_code)
+    except KeyError as e:
+        print(e)
     return route_value
 
 
