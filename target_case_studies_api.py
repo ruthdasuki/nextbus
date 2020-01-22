@@ -2,34 +2,35 @@ import requests
 import sys
 
 # Set up terminal input arguments
-route = sys.argv[1]
-bus_stop_name = sys.argv[2]
-direction = sys.argv[3]
+route = str(sys.argv[1])
+bus_stop_name = str(sys.argv[2])
+direction = str(sys.argv[3])
 
 
+# API call for all routes
 def get_routes(route):
     global route_value
     getRoutes = "https://svc.metrotransit.org/NexTrip/Routes?format=json"
     getRoutes_response = requests.get(getRoutes)
 
-    try:
-        if getRoutes_response.status_code == 200:
-            for i in range(len(getRoutes_response.json())):
-                if route in getRoutes_response.json()[i]["Description"]:
-                    route_value = int(getRoutes_response.json()[i]["Route"])
-                    break
-                else:
-                    print("The route for", route, "cannot be found.")
+    if getRoutes_response.status_code == 200:
+        for i in range(len(getRoutes_response.json())):
+            if route in getRoutes_response.json()[i]["Description"]:
+                route_value = int(getRoutes_response.json()[i]["Route"])
+                break
         else:
-            print("Error occurred: ", getRoutes_response.status_code)
-    except KeyError as e:
-        print(e)
+            print(f"Error: the route for {route} cannot be found.")
+            exit()
+    else:
+        print(f"Error: {getRoutes_response.status_code}")
+
     return route_value
 
 
 route_value = get_routes(route)
 
 
+# API call for direction
 def get_direction(route_value, direction):
     global direction_value
     getDirections = f"https://svc.metrotransit.org/NexTrip/Directions/{route_value}?format=json"
@@ -39,12 +40,18 @@ def get_direction(route_value, direction):
         for i in range(len(getDirections_response.json())):
             if direction.upper() in getDirections_response.json()[i]["Text"]:
                 direction_value = int(getDirections_response.json()[i]["Value"])
+                break
+        else:
+            print(f"Error: the direction {direction} for route {route} cannot be found.")
+            exit()
+    else:
+        print(f"Error: {getDirections_response.status_code}")
     return direction_value
 
 
 direction_value = get_direction(route_value, direction)
 
-
+# API call for bus stop
 def get_stops(route_value, direction_value, bus_stop_name):
     global stop_value
     getStops = f"https://svc.metrotransit.org/NexTrip/Stops/{route_value}/{direction_value}?format=json"
@@ -54,28 +61,36 @@ def get_stops(route_value, direction_value, bus_stop_name):
         for i in range(len(getStops_response.json())):
             if bus_stop_name == getStops_response.json()[i]["Text"]:
                 stop_value = getStops_response.json()[i]["Value"]
+                break
+        else:
+            print(f"Error: the bus stop name {bus_stop_name} for route {route} cannot be found.")
+            exit()
+    else:
+        print(f"Error: {getStops_response.status_code}")
     return stop_value
 
 
 stop_value = get_stops(route_value, direction_value, bus_stop_name)
 
 
+# API call for next bus
 def get_timepoint_departure(route_value, direction_value, stop_value):
     global nextBus
     getTimepointDepartures = f"https://svc.metrotransit.org/NexTrip/{route_value}/{direction_value}/{stop_value}?format=json"
     getTimepointDepartures_response = requests.get(getTimepointDepartures)
 
     if getTimepointDepartures_response.status_code == 200:
-        for i in range(len(getTimepointDepartures_response.json())):
-            if getTimepointDepartures_response.json()[i]["Actual"]:
-                nextBus = getTimepointDepartures_response.json()[i]["DepartureText"]
-            if not getTimepointDepartures_response.json()[i]["Actual"]:
-                nextBus = getTimepointDepartures_response.json()[0]["DepartureText"]
+        if len(getTimepointDepartures_response.json()) == 0:
+            print(f"The service is not available on route {route} {direction} on {bus_stop_name}")
+            exit()
+        else:
+            for i in range(len(getTimepointDepartures_response.json())):
+                if getTimepointDepartures_response.json()[i]["Actual"]:
+                    nextBus = getTimepointDepartures_response.json()[i]["DepartureText"]
+                if not getTimepointDepartures_response.json()[i]["Actual"]:
+                    nextBus = getTimepointDepartures_response.json()[0]["DepartureText"]
         return nextBus
 
 
 nextBus = get_timepoint_departure(route_value, direction_value, stop_value)
 print(nextBus)
-
-# “METRO Blue Line” “Target Field Station Platform 1” “south”
-# “Express - Target - Hwy 252 and 73rd Av P&R - Mpls” “Target North Campus Building F” “south”
