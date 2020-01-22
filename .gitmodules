@@ -1,0 +1,3 @@
+[submodule "target_case_studies_api"]
+	path = target_case_studies_api
+	url = https://github.com/ruthdasuki/target_case_studies_api
