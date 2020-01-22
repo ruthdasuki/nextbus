@@ -1,5 +1,8 @@
 import requests
 import sys
+from ratelimit import limits
+
+THREE_MINUTES = 180
 
 # Set up terminal input arguments
 route = str(sys.argv[1])
@@ -8,8 +11,8 @@ direction = str(sys.argv[3])
 
 
 # API call for all routes
+@limits(calls=1, period=THREE_MINUTES)
 def get_routes(route):
-    global route_value
     getRoutes = "https://svc.metrotransit.org/NexTrip/Routes?format=json"
     getRoutes_response = requests.get(getRoutes)
 
@@ -31,8 +34,8 @@ route_value = get_routes(route)
 
 
 # API call for direction
+@limits(calls=1, period=THREE_MINUTES)
 def get_direction(route_value, direction):
-    global direction_value
     getDirections = f"https://svc.metrotransit.org/NexTrip/Directions/{route_value}?format=json"
     getDirections_response = requests.get(getDirections)
 
@@ -52,8 +55,8 @@ def get_direction(route_value, direction):
 direction_value = get_direction(route_value, direction)
 
 # API call for bus stop
+@limits(calls=1, period=THREE_MINUTES)
 def get_stops(route_value, direction_value, bus_stop_name):
-    global stop_value
     getStops = f"https://svc.metrotransit.org/NexTrip/Stops/{route_value}/{direction_value}?format=json"
     getStops_response = requests.get(getStops)
 
@@ -74,8 +77,8 @@ stop_value = get_stops(route_value, direction_value, bus_stop_name)
 
 
 # API call for next bus
+@limits(calls=1, period=THREE_MINUTES)
 def get_timepoint_departure(route_value, direction_value, stop_value):
-    global nextBus
     getTimepointDepartures = f"https://svc.metrotransit.org/NexTrip/{route_value}/{direction_value}/{stop_value}?format=json"
     getTimepointDepartures_response = requests.get(getTimepointDepartures)
 
