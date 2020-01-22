@@ -5,15 +5,15 @@ from ratelimit import limits
 THREE_MINUTES = 180
 
 # Set up terminal input arguments
-route = str(sys.argv[1])
-bus_stop_name = str(sys.argv[2])
-direction = str(sys.argv[3])
+#route = str(sys.argv[1])
+#bus_stop_name = str(sys.argv[2])
+#direction = str(sys.argv[3])
 
 
 # Unit testing variables
-# route = ""
-# bus_stop_name = ""
-# direction = ""
+route = ""
+bus_stop_name = ""
+direction = ""
 
 
 # API call for all routes
@@ -29,7 +29,7 @@ def get_routes(route):
                 break
         else:
             print(f"Error: the route for {route} cannot be found.")
-            exit()
+            #exit()
     else:
         print(f"Error: {getRoutes_response.status_code}")
 
@@ -49,7 +49,7 @@ def get_direction(route_value, direction):
                 break
         else:
             print(f"Error: the direction {direction} for route {route} cannot be found.")
-            exit()
+            #exit()
     else:
         print(f"Error: {getDirections_response.status_code}")
     return direction_value
@@ -68,7 +68,7 @@ def get_stops(route_value, direction_value, bus_stop_name):
                 break
         else:
             print(f"Error: the bus stop name {bus_stop_name} for route {route} cannot be found.")
-            exit()
+            #exit()
     else:
         print(f"Error: {getStops_response.status_code}")
     return stop_value

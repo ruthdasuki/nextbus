@@ -1,9 +1,26 @@
-import target_case_studies_api
-from target_case_studies_api.target_case_studies_api import nextBus
+from target_case_studies_api import main, get_routes, get_direction, get_stops, get_timepoint_departure
 
-route = "METRO Blue Line"
-bus_stop_name = "Target Field Station Platform 1"
-direction = "south"
 
-def test_one():
-    assert nextBus == "13:01"
+def test_get_routes():
+    route = "METRO Green Line"
+    assert get_routes(route) == 902
+
+
+def test_get_direction():
+    route_value = 902
+    direction = "east"
+    assert get_direction(route_value, direction) == 2
+
+
+def test_get_stops():
+    route_value = 902
+    direction_value = 2
+    bus_stop_name = "Target Field Station Platform 1"
+    assert get_stops(route_value, direction_value, bus_stop_name)
+
+
+def test_get_timepoint_departure_1():
+    route_value = 902
+    direction_value = 2
+    stop_value = "TF12"
+    assert get_timepoint_departure(route_value, direction_value, stop_value)
