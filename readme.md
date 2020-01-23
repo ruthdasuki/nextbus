@@ -61,3 +61,48 @@ direction = str(sys.argv[3])
 Versioning
 -------
 I used git for Versioning. For the versions available, see the git repository.
+
+
+Test Cases
+-------
+
+## Valid Test Cases
+
+### Valid arguments to return calculation for next bus
+python3 nextbus.py "Franklin Av - Riverside Av - U of M - 8th St SE" "Hennepin Ave and 22nd St" "east"
+Result: 3 Min
+
+### Valid arguments to return next bus arrival time
+python3 nextbus.py "METRO Blue Line" "Target Field Station Platform 1" "south"
+Result: 10:36
+
+### Partial bus route name
+python3 nextbus.py "Franklin" "Hennepin Ave and 22nd St" "east"
+Result: 8 Min
+
+
+## Invalid Test Cases
+
+### Invalid number of arguments
+python3 nextbus.py "METRO Blue ll" "Target Field Station Platform 1"
+Result: Please enter the following command: python3 nextbus.py [BUS ROUTE] [BUS STOP NAME] [DIRECTION]
+
+### Invalid bus route
+python3 nextbus.py "METRO Blue ll" "Target Field Station Platform 1" "south"
+Result: Error: the route for METRO Blue ll cannot be found.
+
+### Invalid bus stop name
+python3 nextbus.py "METRO Blue Line" "Target Field Station Platform 3" "south"
+Result: Error: the bus stop name Target Field Station Platform 3 for route METRO Blue Line cannot be found.
+
+python3 nextbus.py 1 2 3
+Result: Error: the direction 3 for route 1 cannot be found.
+
+### Invalid direction
+python3 nextbus.py "METRO Blue Line" "Target Field Station Platform 1" "east"
+Result: Error: the direction east for route METRO Blue Line cannot be found.
+
+
+### No available bus
+python3 nextbus.py "Express - Target - Hwy 252 and 73rd Av P&R - Mpls" "Target North Campus Building F" "south"
+Result: The service is not available on route Express - Target - Hwy 252 and 73rd Av P&R - Mpls south on Target North Campus Building F
