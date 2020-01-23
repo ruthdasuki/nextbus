@@ -59,6 +59,11 @@ Versioning
 The program uses git for Versioning. For the versions available, see the git repository.
 
 
+Scaling
+-------
+The program utilizes ratelimit to limit only ONE API call to Metro Transit public every THIRTY seconds. As the website specifically points out, "Third party applications should not update departure information more frequently than every 30 seconds. Applications making excessive calls and updating more frequently than 30 seconds will be subject to restriction."
+
+
 Test Cases
 -------
 
