@@ -2,7 +2,9 @@ import requests
 import sys
 from ratelimit import limits
 
+# Configure global vairables
 THREE_MINUTES = 180
+
 
 # API call for all routes
 @limits(calls=1, period=THREE_MINUTES)
@@ -17,7 +19,7 @@ def get_routes(route):
                 break
         else:
             print(f"Error: the route for {route} cannot be found.")
-            #exit()
+            exit()
     else:
         print(f"Error: {getRoutes_response.status_code}")
 
@@ -37,7 +39,7 @@ def get_direction(route_value, direction):
                 break
         else:
             print(f"Error: the direction {direction} for route {route} cannot be found.")
-            #exit()
+            exit()
     else:
         print(f"Error: {getDirections_response.status_code}")
     return direction_value
@@ -56,7 +58,7 @@ def get_stops(route_value, direction_value, bus_stop_name):
                 break
         else:
             print(f"Error: the bus stop name {bus_stop_name} for route {route} cannot be found.")
-            #exit()
+            exit()
     else:
         print(f"Error: {getStops_response.status_code}")
     return stop_value
@@ -84,19 +86,27 @@ def get_timepoint_departure(route_value, direction_value, stop_value):
 
 
 def main():
-    # Set up terminal input arguments
-    route = str(sys.argv[1])
-    bus_stop_name = str(sys.argv[2])
-    direction = str(sys.argv[3])
-
-    # Call functions
+    # Check number of arguments
     if len(sys.argv) != 4:
-        print("Please enter the following command: nextbus.py [BUS ROUTE] [BUS STOP NAME] [DIRECTION]")
-    route_value = get_routes(route)
-    direction_value = get_direction(route_value, direction)
-    stop_value = get_stops(route_value, direction_value, bus_stop_name)
-    nextBus = get_timepoint_departure(route_value, direction_value, stop_value)
-    print(nextBus)
+        print("Please enter the following command: python3 nextbus.py [BUS ROUTE] [BUS STOP NAME] [DIRECTION]")
+        exit()
+    else:
+        # Declare global vairables
+        global route, bus_stop_name, direction
+
+        # Assign arguments to variables
+        route = str(sys.argv[1])
+        bus_stop_name = str(sys.argv[2])
+        direction = str(sys.argv[3])
+
+        # Call all the functions
+        route_value = get_routes(route)
+        direction_value = get_direction(route_value, direction)
+        stop_value = get_stops(route_value, direction_value, bus_stop_name)
+        nextBus = get_timepoint_departure(route_value, direction_value, stop_value)
+
+        # End result
+        print(nextBus)
 
 
 if __name__ == "__main__":
