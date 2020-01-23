@@ -18,10 +18,10 @@ def get_routes(route):
                 route_value = int(getRoutes_response.json()[i]["Route"])
                 break
         else:
-            print(f"Error: The route for {route} cannot be found.")
+            print(f"ERROR: The route for {route} cannot be found.")
             exit()
     else:
-        print(f"Error: {getRoutes_response.status_code}")
+        print(f"ERROR: {getRoutes_response.status_code}")
 
     return route_value
 
@@ -38,10 +38,10 @@ def get_direction(route, route_value, direction):
                 direction_value = int(getDirections_response.json()[i]["Value"])
                 break
         else:
-            print(f"Error: The direction {direction} for route {route} cannot be found.")
+            print(f"ERROR: The direction {direction} for route {route} cannot be found.")
             exit()
     else:
-        print(f"Error: {getDirections_response.status_code}")
+        print(f"ERROR: {getDirections_response.status_code}")
     return direction_value
 
 
@@ -57,10 +57,10 @@ def get_stops(route, route_value, direction_value, bus_stop_name):
                 stop_value = getStops_response.json()[i]["Value"]
                 break
         else:
-            print(f"Error: The bus stop name {bus_stop_name} for route {route} cannot be found.")
+            print(f"ERROR: The bus stop name {bus_stop_name} for route {route} cannot be found.")
             exit()
     else:
-        print(f"Error: {getStops_response.status_code}")
+        print(f"ERROR: {getStops_response.status_code}")
     return stop_value
 
 
@@ -72,7 +72,7 @@ def get_timepoint_departure(route, route_value, direction, direction_value, bus_
 
     if getTimepointDepartures_response.status_code == 200:
         if len(getTimepointDepartures_response.json()) == 0:
-            print(f"The service is not available on route {route} {direction} on {bus_stop_name}")
+            print(f"ERROR: The service is not available on route {route} {direction} on {bus_stop_name}")
             exit()
         else:
             for i in range(len(getTimepointDepartures_response.json())):
@@ -88,7 +88,7 @@ def get_timepoint_departure(route, route_value, direction, direction_value, bus_
 def main():
     # Check number of arguments
     if len(sys.argv) != 4:
-        print("Please enter the following command: python3 nextbus.py [BUS ROUTE] [BUS STOP NAME] [DIRECTION]")
+        print("ERROR: Please enter the following command: python3 nextbus.py [BUS ROUTE] [BUS STOP NAME] [DIRECTION]")
         exit()
     else:
         # Assign arguments to variables
@@ -96,14 +96,20 @@ def main():
         bus_stop_name = str(sys.argv[2])
         direction = str(sys.argv[3])
 
-        # Call all the functions
-        route_value = get_routes(route)
-        direction_value = get_direction(route, route_value, direction)
-        stop_value = get_stops(route, route_value, direction_value, bus_stop_name)
-        nextBus = get_timepoint_departure(route, route_value, direction, direction_value, bus_stop_name, stop_value)
+        valid_direction = ["north", "east", "west", "south"]
 
-        # End result
-        print(nextBus)
+        if direction not in valid_direction:
+            print(f"ERROR: Please enter a valid DIRECTION as in {valid_direction}")
+            exit()
+        else:
+            # Call all the functions
+            route_value = get_routes(route)
+            direction_value = get_direction(route, route_value, direction)
+            stop_value = get_stops(route, route_value, direction_value, bus_stop_name)
+            nextBus = get_timepoint_departure(route, route_value, direction, direction_value, bus_stop_name, stop_value)
+
+            # End result
+            print(nextBus)
 
 
 if __name__ == "__main__":
