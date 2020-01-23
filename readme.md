@@ -33,34 +33,30 @@ pip3 install ratelimit
 How To Use The Program?
 ---------------
 
-1. Clone the Python program on: https://github.com/ruthdasuki/target_case_studies_api
-2. Go to the directory that the program is on.
-3. Use command line to enter the following information: python3 target_case_studies_api.py [BUS ROUTE] [BUS STOP NAME] [DIRECTION]
+1. Clone the Python program on: https://github.com/ruthdasuki/nextbus
+2. Go to the directory that the program is in.
+3. Use command line to enter the following information: python3 nextbus.py [BUS ROUTE] [BUS STOP NAME] [DIRECTION]
 
 
 Testing
 -------
 
-1. Install pytest
+1. Install unittest
 
 ```
-pip3 install pytest
+pip3 install unittest
 ```
 
-2. Navigate to file target_case_studies_api_test.py
-3. In order for the pytest to run, in target_case_studies_api.py, comment out the following code:
+2. In command line, enter the following command:
 
 ```
-route = str(sys.argv[1])
-bus_stop_name = str(sys.argv[2])
-direction = str(sys.argv[3])
+python3 nextbus_test.py
 ```
-4. If you want to run the test in PyCharm, set the Configuration to pytest and run the tests.
 
 
 Versioning
 -------
-I used git for Versioning. For the versions available, see the git repository.
+The program uses git for Versioning. For the versions available, see the git repository.
 
 
 Test Cases
