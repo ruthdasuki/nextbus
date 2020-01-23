@@ -4,18 +4,6 @@ from ratelimit import limits
 
 THREE_MINUTES = 180
 
-# Set up terminal input arguments
-#route = str(sys.argv[1])
-#bus_stop_name = str(sys.argv[2])
-#direction = str(sys.argv[3])
-
-
-# Unit testing variables
-route = ""
-bus_stop_name = ""
-direction = ""
-
-
 # API call for all routes
 @limits(calls=1, period=THREE_MINUTES)
 def get_routes(route):
@@ -90,10 +78,20 @@ def get_timepoint_departure(route_value, direction_value, stop_value):
                     nextBus = getTimepointDepartures_response.json()[i]["DepartureText"]
                 if not getTimepointDepartures_response.json()[i]["Actual"]:
                     nextBus = getTimepointDepartures_response.json()[0]["DepartureText"]
-        return nextBus
+    else:
+        print(f"Error: {getTimepointDepartures_response.status_code}")
+    return nextBus
 
 
 def main():
+    # Set up terminal input arguments
+    route = str(sys.argv[1])
+    bus_stop_name = str(sys.argv[2])
+    direction = str(sys.argv[3])
+
+    # Call functions
+    if len(sys.argv) != 4:
+        print("Please enter the following command: nextbus.py [BUS ROUTE] [BUS STOP NAME] [DIRECTION]")
     route_value = get_routes(route)
     direction_value = get_direction(route_value, direction)
     stop_value = get_stops(route_value, direction_value, bus_stop_name)

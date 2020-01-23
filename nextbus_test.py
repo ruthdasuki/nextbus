@@ -1,4 +1,4 @@
-from target_case_studies_api import main, get_routes, get_direction, get_stops, get_timepoint_departure
+from nextbus import get_routes, get_direction, get_stops, get_timepoint_departure
 
 
 def test_get_routes():
@@ -16,10 +16,10 @@ def test_get_stops():
     route_value = 902
     direction_value = 2
     bus_stop_name = "Target Field Station Platform 1"
-    assert get_stops(route_value, direction_value, bus_stop_name)
+    assert get_stops(route_value, direction_value, bus_stop_name) == "TF12"
 
 
-def test_get_timepoint_departure_1():
+def test_get_timepoint_departure():
     route_value = 902
     direction_value = 2
     stop_value = "TF12"
