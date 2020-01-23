@@ -68,30 +68,23 @@ The bus has arrived
 
 ```
 python3 nextbus.py "Franklin Av - Riverside Av - U of M - 8th St SE" "Hennepin Ave and 22nd St" "east"
-Result: Due
+Due
 ```
 
 Calculation for next bus
 
 ```
 python3 nextbus.py "Franklin Av - Riverside Av - U of M - 8th St SE" "Hennepin Ave and 22nd St" "east"
-Result: 3 Min
+3 Min
 ```
 
 Next bus arrival time
 
 ```
 python3 nextbus.py "METRO Blue Line" "Target Field Station Platform 1" "south"
-Result: 10:36
+10:36
 ```
 
-
-Partial bus route name
-
-```
-python3 nextbus.py "Franklin" "Hennepin Ave and 22nd St" "east"
-Result: 8 Min
-```
 
 ### Invalid Test Cases
 
@@ -99,45 +92,45 @@ Invalid number of arguments
 
 ```
 python3 nextbus.py "METRO Blue ll" "Target Field Station Platform 1"
-Result: ERROR: Please enter the following command: python3 nextbus.py [BUS ROUTE] [BUS STOP NAME] [DIRECTION]
+ERROR: Please enter the following command: python3 nextbus.py [BUS ROUTE] [BUS STOP NAME] [DIRECTION]
 ```
 
 Invalid direction
 
 ```
 python3 nextbus.py "Franklin Av - Riverside Av - U of M - 8th St SE" "Hennepin Ave and 22nd St" 2
-Result: ERROR: Please enter a valid DIRECTION as in ['north', 'east', 'west', 'south']
+ERROR: Please enter a valid DIRECTION as in ['north', 'east', 'west', 'south']
 ```
 
 ```
 python3 python3 nextbus.py 1 2 3
-Result: ERROR: Please enter a valid DIRECTION as in ['north', 'east', 'west', 'south']
+ERROR: Please enter a valid DIRECTION as in ['north', 'east', 'west', 'south']
 ```
 
 Invalid bus route
 
 ```
 python3 nextbus.py "METRO Blue ll" "Target Field Station Platform 1" "south"
-Result: ERROR: The route for METRO Blue ll cannot be found.
+ERROR: The route for METRO Blue ll cannot be found.
 ```
 
 Invalid bus stop name
 
 ```
 python3 nextbus.py "METRO Blue Line" "Target Field Station Platform 3" "south"
-Result: ERROR: The bus stop name Target Field Station Platform 3 for route METRO Blue Line cannot be found.
+ERROR: The bus stop name Target Field Station Platform 3 for route METRO Blue Line cannot be found.
 ```
 
 Invalid direction
 
 ```
 python3 nextbus.py "METRO Blue Line" "Target Field Station Platform 1" "east"
-Result: ERROR: The direction east for route METRO Blue Line cannot be found.
+ERROR: The direction east for route METRO Blue Line cannot be found.
 ```
 
 No available bus
 
 ```
 python3 nextbus.py "Express - Target - Hwy 252 and 73rd Av P&R - Mpls" "Target North Campus Building F" "south"
-Result: The service is not available on route Express - Target - Hwy 252 and 73rd Av P&R - Mpls south on Target North Campus Building F
+The service is not available on route Express - Target - Hwy 252 and 73rd Av P&R - Mpls south on Target North Campus Building F
 ```

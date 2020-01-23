@@ -22,6 +22,7 @@ def get_routes(route):
             exit()
     else:
         print(f"ERROR: {getRoutes_response.status_code}")
+        exit()
 
     return route_value
 
@@ -42,6 +43,8 @@ def get_direction(route, route_value, direction):
             exit()
     else:
         print(f"ERROR: {getDirections_response.status_code}")
+        exit()
+
     return direction_value
 
 
@@ -61,6 +64,8 @@ def get_stops(route, route_value, direction_value, bus_stop_name):
             exit()
     else:
         print(f"ERROR: {getStops_response.status_code}")
+        exit()
+
     return stop_value
 
 
@@ -82,6 +87,8 @@ def get_timepoint_departure(route, route_value, direction, direction_value, bus_
                     nextBus = getTimepointDepartures_response.json()[0]["DepartureText"]
     else:
         print(f"Error: {getTimepointDepartures_response.status_code}")
+        exit()
+        
     return nextBus
 
 
@@ -98,6 +105,7 @@ def main():
 
         valid_direction = ["north", "east", "west", "south"]
 
+        # Check for valid direction input
         if direction not in valid_direction:
             print(f"ERROR: Please enter a valid DIRECTION as in {valid_direction}")
             exit()

@@ -18,6 +18,8 @@ class TestNextBus(unittest.TestCase):
         assert nextbus.get_routes(route) == 901
 
     def test_get_routes_2(self):
+
+        # Invalid bus route
         route = "METRO Blue Ll"
 
         with self.assertRaises(SystemExit) as cm:
@@ -30,6 +32,8 @@ class TestNextBus(unittest.TestCase):
         assert nextbus.get_direction(route, route_value, direction) == 2
 
     def test_get_direction_2(self):
+
+        # Invalid direction on certain bus route
         direction = "south"
 
         with self.assertRaises(SystemExit) as cm:
@@ -42,6 +46,8 @@ class TestNextBus(unittest.TestCase):
         assert nextbus.get_stops(route, route_value, direction_value, bus_stop_name) == "TF12"
 
     def test_get_stops_2(self):
+
+        # Invalid bus stop name
         bus_stop_name = "Target Field Station Platform 3"
 
         with self.assertRaises(SystemExit) as cm:
