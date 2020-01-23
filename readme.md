@@ -63,6 +63,9 @@ Scaling
 -------
 The program utilizes ratelimit to limit only ONE API call to Metro Transit public every THIRTY seconds. As the website specifically points out, "Third party applications should not update departure information more frequently than every 30 seconds. Applications making excessive calls and updating more frequently than 30 seconds will be subject to restriction."
 
+When desire to use, uncomment the following code before each function:
+# @limits(calls=1, period=THIRTY_SECONDS)
+
 
 Test Cases
 -------
