@@ -7,7 +7,7 @@ THREE_MINUTES = 180
 
 
 # API call for all routes
-#@limits(calls=1, period=THREE_MINUTES)
+# @limits(calls=1, period=THREE_MINUTES)
 def get_routes(route):
     getRoutes = "https://svc.metrotransit.org/NexTrip/Routes?format=json"
     getRoutes_response = requests.get(getRoutes)
@@ -27,7 +27,7 @@ def get_routes(route):
 
 
 # API call for direction
-#@limits(calls=1, period=THREE_MINUTES)
+# @limits(calls=1, period=THREE_MINUTES)
 def get_direction(route, route_value, direction):
     getDirections = f"https://svc.metrotransit.org/NexTrip/Directions/{route_value}?format=json"
     getDirections_response = requests.get(getDirections)
@@ -46,7 +46,7 @@ def get_direction(route, route_value, direction):
 
 
 # API call for bus stop
-#@limits(calls=1, period=THREE_MINUTES)
+# @limits(calls=1, period=THREE_MINUTES)
 def get_stops(route, route_value, direction_value, bus_stop_name):
     getStops = f"https://svc.metrotransit.org/NexTrip/Stops/{route_value}/{direction_value}?format=json"
     getStops_response = requests.get(getStops)
@@ -65,7 +65,7 @@ def get_stops(route, route_value, direction_value, bus_stop_name):
 
 
 # API call for next bus
-#@limits(calls=1, period=THREE_MINUTES)
+# @limits(calls=1, period=THREE_MINUTES)
 def get_timepoint_departure(route, route_value, direction, direction_value, bus_stop_name, stop_value):
     getTimepointDepartures = f"https://svc.metrotransit.org/NexTrip/{route_value}/{direction_value}/{stop_value}?format=json"
     getTimepointDepartures_response = requests.get(getTimepointDepartures)

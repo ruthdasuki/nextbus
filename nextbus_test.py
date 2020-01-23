@@ -6,6 +6,7 @@ class TestNextBus(unittest.TestCase):
     # Assign global variables
     global route, route_value, direction, direction_value, bus_stop_name, stop_value
 
+    # Variables for successful results
     route = "METRO Blue Line"
     route_value = 902
     direction = "east"
@@ -54,6 +55,8 @@ class TestNextBus(unittest.TestCase):
                                                stop_value)
 
     def test_get_timepoint_departure_2(self):
+
+        # Variables for not available service
         route = "METRO Green Line Bus"
         route_value = 992
         bus_stop_name = "Ramp B/5th St Transit Center"

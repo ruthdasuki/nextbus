@@ -64,14 +64,21 @@ Test Cases
 
 ### Valid Test Cases
 
-Valid arguments to return calculation for next bus
+The bus has arrived
+
+```
+python3 nextbus.py "Franklin Av - Riverside Av - U of M - 8th St SE" "Hennepin Ave and 22nd St" "east"
+Result: Due
+```
+
+Calculation for next bus
 
 ```
 python3 nextbus.py "Franklin Av - Riverside Av - U of M - 8th St SE" "Hennepin Ave and 22nd St" "east"
 Result: 3 Min
 ```
 
-Valid arguments to return next bus arrival time
+Next bus arrival time
 
 ```
 python3 nextbus.py "METRO Blue Line" "Target Field Station Platform 1" "south"
