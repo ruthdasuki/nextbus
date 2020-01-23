@@ -103,7 +103,7 @@ ERROR: Please enter a valid DIRECTION as in ['north', 'east', 'west', 'south']
 ```
 
 ```
-python3 python3 nextbus.py 1 2 3
+python3 nextbus.py 1 2 3
 ERROR: Please enter a valid DIRECTION as in ['north', 'east', 'west', 'south']
 ```
 
